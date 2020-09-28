@@ -1,3 +1,6 @@
+# Microsoft Learn Azure Kubernetes Service (AKS) exercises
+
+Sample apps for Microsoft Learn modules using AKS.
 
 # Contributing
 
