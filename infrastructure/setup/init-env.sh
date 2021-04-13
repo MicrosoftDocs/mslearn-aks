@@ -146,7 +146,7 @@ displayGreeting() {
     fi
     
     # Install .NET Core global tool to display connection info
-    dotnet tool install dotnetsay --global --version 2.1.4 --verbosity quiet
+    dotnet tool install dotnetsay --global --version 2.1.7 --verbosity quiet
 
     # Greetings!
     if [ "$dotnetBotGreeting" ]; then
