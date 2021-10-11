@@ -433,7 +433,7 @@ service:
 ingress:
   ## @param ingress.enabled Enable ingress record generation for ASP.NET Core
   ##
-  enabled: false
+  enabled: true
   ## @param ingress.pathType Ingress path type
   ##
   pathType: ImplementationSpecific
