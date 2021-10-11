@@ -91,9 +91,9 @@ else
         declare useACR="false"
     fi
 
-    # CKITTEL-TEMP: if  ! [ -z "$useACR" ] && [ $useACR == true ]; then
-        # CKITTEL-TEMP: $editorHomeLocation/infrastructure/deploy/k8s/create-acr.sh --subscription $clusterSubs --resource-group $resourceGroupName --aks-name $moduleName --acr-name mslearn-aks-acr --location westus
-    # CKITTEL-TEMP: fi
+    if  ! [ -z "$useACR" ] && [ $useACR == true ]; then
+        $editorHomeLocation/infrastructure/deploy/k8s/create-acr.sh --subscription $clusterSubs --resource-group $resourceGroupName --aks-name $moduleName --acr-name mslearn-aks-acr --location westus
+    fi
 
     # Display information to use
     echo "Azure Container Registry Information"

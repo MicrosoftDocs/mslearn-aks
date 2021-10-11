@@ -162,6 +162,4 @@ echo export LEARN_ACRPASSWORD=$learnAcrPassword >> create-acr-exports.txt
 echo export CLUSTER_IDTAG=$acrIdTag >> create-acr-exports.txt
 
 echo 
-echo "Created Azure Container Registry \"$learnAcrName\" in resource group \"$clusterRg\" in location \"$clusterLocation\"." 
-
-#mv -f create-acr-exports.txt ~/clouddrive/mslearn-aks/
+echo "Created Azure Container Registry \"$learnAcrName\" in resource group \"$clusterRg\" in location \"$clusterLocation\"."
