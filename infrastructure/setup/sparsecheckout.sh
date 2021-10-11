@@ -2,7 +2,7 @@
 
 # This script takes a list of directories to clone from the mslearn-aks repo. Since it's a subset of 
 # the repo, it's referred to as a "sparse checkout. An environment variable named $gitBranch should 
-# be set and contain the branch to be used, e.g., "live" or "master".
+# be set and contain the branch to be used, e.g., "main".
 
 # constants
 declare gitUser="MicrosoftDocs"

@@ -35,7 +35,7 @@ if [ -z "$clusterSubs" ]; then
 fi
 
 if [ -z "$moduleName" ]; then
-     echo "${newline}${errorStyle}ERROR: Cluster name is mandatory. Use -n to set it.$clusterSubs.${defaultTextStyle}${newline}"
+     echo "${newline}${errorStyle}ERROR: Cluster name is mandatory. Use -n to set it.${defaultTextStyle}${newline}"
      return 1
 fi
 
@@ -51,7 +51,7 @@ if [ -z "$moduleName" ]; then
 fi
 
 # Any other declarations we need
-declare gitUser="cryophobia"
+declare gitUser="MicrosoftDocs"
 declare -x gitBranch="main"
 declare initScript=https://raw.githubusercontent.com/$gitUser/mslearn-aks/$gitBranch/infrastructure/setup/init-env.sh
 declare suppressAzureResources=false
@@ -74,7 +74,7 @@ else
         declare installDotNet="false"
     fi
 
-    # Grab and run initenvironment.sh
+    # Grab and run init-env.sh
     . <(wget -q -O - $initScript)
 
     # Download and build
@@ -84,7 +84,7 @@ else
     cd $editorHomeLocation
 
     # Run mslearn-aks quickstart to deploy to AKS
-    $editorHomeLocation/infrastructure/deploy/k8s/quickstart.sh --subscription $clusterSubs --resource-group $resourceGroupName -n $moduleName --location westus
+    #CKITEEL-TEMP: $editorHomeLocation/infrastructure/deploy/k8s/quickstart.sh --subscription $clusterSubs --resource-group $resourceGroupName -n $moduleName --location westus
 
     # Create ACR resource
     if [ -z "$useACR" ]; then
@@ -94,7 +94,7 @@ else
     echo "useACR $useACR"
 
     if  ! [ -z "$useACR" ] && [ $useACR == true ]; then
-        $editorHomeLocation/infrastructure/deploy/k8s/create-acr.sh --subscription $clusterSubs --resource-group $resourceGroupName --aks-name $moduleName --acr-name mslearn-aks-acr --location westus
+        #CKITEEL-TEMP: $editorHomeLocation/infrastructure/deploy/k8s/create-acr.sh --subscription $clusterSubs --resource-group $resourceGroupName --aks-name $moduleName --acr-name mslearn-aks-acr --location westus
     fi
 
     # Display information to use
