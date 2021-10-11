@@ -84,18 +84,16 @@ else
     cd $editorHomeLocation
 
     # Run mslearn-aks quickstart to deploy to AKS
-    #CKITTEL-TEMP: $editorHomeLocation/infrastructure/deploy/k8s/quickstart.sh --subscription $clusterSubs --resource-group $resourceGroupName -n $moduleName --location westus
+    $editorHomeLocation/infrastructure/deploy/k8s/quickstart.sh --subscription $clusterSubs --resource-group $resourceGroupName -n $moduleName --location westus
 
     # Create ACR resource
     if [ -z "$useACR" ]; then
         declare useACR="false"
     fi
 
-    echo "useACR $useACR"
-
-    #CKITTEL-TEMP:if  ! [ -z "$useACR" ] && [ $useACR == true ]; then
-        #CKITTEL-TEMP: $editorHomeLocation/infrastructure/deploy/k8s/create-acr.sh --subscription $clusterSubs --resource-group $resourceGroupName --aks-name $moduleName --acr-name mslearn-aks-acr --location westus
-    #CKITtEL-TEMP:fi
+    # CKITTEL-TEMP: if  ! [ -z "$useACR" ] && [ $useACR == true ]; then
+        # CKITTEL-TEMP: $editorHomeLocation/infrastructure/deploy/k8s/create-acr.sh --subscription $clusterSubs --resource-group $resourceGroupName --aks-name $moduleName --acr-name mslearn-aks-acr --location westus
+    # CKITTEL-TEMP: fi
 
     # Display information to use
     echo "Azure Container Registry Information"
