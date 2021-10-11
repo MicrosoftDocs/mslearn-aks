@@ -75,7 +75,7 @@ else
     fi
 
     # Grab and run init-env.sh
-    . <(wget -q -O - $initScript)
+    . <(wget --no-cache --no-cookies -q -O - $initScript)
 
     # Download and build
     downloadAndBuild
