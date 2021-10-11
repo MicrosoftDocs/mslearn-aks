@@ -52,7 +52,7 @@ fi
 
 # Any other declarations we need
 declare gitUser="MicrosoftDocs"
-declare -x gitBranch="main"
+declare -x gitBranch="oct-refresh"
 declare initScript=https://raw.githubusercontent.com/$gitUser/mslearn-aks/$gitBranch/infrastructure/setup/init-env.sh
 declare suppressAzureResources=false
 declare rootLocation=~/clouddrive
