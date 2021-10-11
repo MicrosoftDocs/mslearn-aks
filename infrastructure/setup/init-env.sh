@@ -184,7 +184,7 @@ checkForCloudShell() {
 
 # Load the theme
 declare themeScript=$scriptPath/theme.sh
-. <(wget --no-cache --no-cookies -q -O - $themeScript)
+. <(wget -q -O - $themeScript)
 
 # Execute functions
 checkForCloudShell
