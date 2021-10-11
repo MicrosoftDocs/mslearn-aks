@@ -1,15 +1,10 @@
 # This script expects the following environment variables:
-# moduleName
+# moduleName, gitBranch, gitUser
 # eg. declare moduleName="learn-aks-deploy-helm"
-#
-# scriptPath
-# projectRootDirectory
 
 # Common Declarations
-declare gitUser="MicrosoftDocs"
 declare scriptPath=https://raw.githubusercontent.com/$gitUser/mslearn-aks/$gitBranch/infrastructure/scripts
 declare dotnetScriptsPath=$scriptPath/dotnet
-declare instanceId=$(($RANDOM * $RANDOM))
 declare gitDirectoriesToClone="infrastructure/deploy/ modules/$moduleName/src/"
 declare gitPathToCloneScript=https://raw.githubusercontent.com/$gitUser/mslearn-aks/$gitBranch/infrastructure/setup/sparsecheckout.sh
 
@@ -17,33 +12,10 @@ if ! [ $rootLocation ]; then
     declare rootLocation=~
 fi
 
-#declare srcWorkingDirectory=$rootLocation/mslearn-aks/src
-#declare setupWorkingDirectory=$rootLocation/mslearn-aks/setup
-declare subscriptionId=$(az account show --query id --output tsv)
+declare subscriptionId=$(az account show --query id -o tsv)
 declare resourceGroupName=""
-declare defaultLocation="centralus"
 
 # Functions
-setAzureCliDefaults() {
-    echo "${headingStyle}Setting default Azure CLI values...${azCliCommandStyle}"
-    (
-        set -x
-        az configure --defaults \
-            group=$resourceGroupName \
-            location=$defaultLocation
-    )
-}
-
-resetAzureCliDefaults() {
-    echo "${headingStyle}Resetting default Azure CLI values...${azCliCommandStyle}"
-    (
-        set -x
-        az configure --defaults \
-            group= \
-            location=
-    )
-}
-
 configureDotNetCli() {
     echo "${newline}${headingStyle}Configuring the .NET Core CLI...${defaultTextStyle}"
     declare installedDotNet=$(dotnet --version)
@@ -115,20 +87,6 @@ downloadAndBuild() {
     echo "${defaultTextStyle}"
 }
 
-# Provision Azure Resource Group
-# Should only ever run if we're running in the Cloud Shell without the Learn environment
-provisionResourceGroup() {
-    if [ "$resourceGroupName" = "$moduleName" ]; then
-        (
-            echo "${newline}${headingStyle}Provisioning Azure Resource Group...${azCliCommandStyle}"
-            set -x
-            az group create \
-                --name $resourceGroupName \
-                --output none
-        )
-    fi
-}
-
 addVariablesToStartup() {
     if ! [[ $(grep $variableScript ~/.bashrc) ]]; then
         echo "${newline}# Next line added at $(date) by Microsoft Learn $moduleName" >> ~/.bashrc
@@ -144,27 +102,6 @@ displayGreeting() {
     if ! [ "$installDotNet" ]; then
         echo "${defaultTextStyle}Using .NET Core SDK version ${headingStyle}$dotnetSdkVersion${defaultTextStyle}"
     fi
-    
-    # Install .NET Core global tool to display connection info
-    dotnet tool install dotnetsay --global --version 2.1.7 --verbosity quiet
-
-    # Greetings!
-    if [ "$dotnetBotGreeting" ]; then
-        greeting="${newline}${defaultTextStyle}$dotnetBotGreeting${dotnetSayStyle}"
-    else
-        greeting="${newline}${defaultTextStyle}Hi there!${newline}"
-        greeting+="I'm going to provision some ${azCliCommandStyle}Azure${defaultTextStyle} resources${newline}"
-        greeting+="and get the code you'll need for this module.${dotnetSayStyle}"
-    fi
-
-    dotnetsay "$greeting"
-}
-
-summarize() {
-    summary="${newline}${successStyle}Your environment is ready!${defaultTextStyle}${newline}"
-    summary+="I set up some ${azCliCommandStyle}Azure${defaultTextStyle} resources and downloaded the code you'll need.${newline}"
-    summary+="You can resume this session and display this message again by re-running the script.${dotnetSayStyle}"
-    dotnetsay "$summary"
 }
 
 determineResourceGroup() {
