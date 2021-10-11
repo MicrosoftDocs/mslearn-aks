@@ -51,7 +51,7 @@ if [ -z "$moduleName" ]; then
 fi
 
 # Any other declarations we need
-declare gitUser="MicrosoftDocs"
+declare -x gitUser="MicrosoftDocs"
 declare -x gitBranch="oct-refresh"
 declare initScript=https://raw.githubusercontent.com/$gitUser/mslearn-aks/$gitBranch/infrastructure/setup/init-env.sh
 declare suppressAzureResources=false

@@ -1,9 +1,8 @@
 # This script expects the following environment variables:
-# moduleName
+# moduleName, gitBranch, gitUser
 # eg. declare moduleName="learn-aks-deploy-helm"
 
 # Common Declarations
-declare gitUser="MicrosoftDocs"
 declare scriptPath=https://raw.githubusercontent.com/$gitUser/mslearn-aks/$gitBranch/infrastructure/scripts
 declare dotnetScriptsPath=$scriptPath/dotnet
 declare gitDirectoriesToClone="infrastructure/deploy/ modules/$moduleName/src/"
