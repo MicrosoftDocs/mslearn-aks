@@ -60,7 +60,7 @@ export LEARN_QUICKSTART=true
 cd ~/clouddrive/mslearn-aks/infrastructure/deploy/k8s
 
 # AKS Cluster creation
-#CKITTEL-TEMP: . create-aks.sh
+. create-aks.sh
 
 eval $(cat ~/clouddrive/mslearn-aks/create-aks-exports.txt)
 
