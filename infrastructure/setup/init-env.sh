@@ -144,27 +144,6 @@ displayGreeting() {
     if ! [ "$installDotNet" ]; then
         echo "${defaultTextStyle}Using .NET Core SDK version ${headingStyle}$dotnetSdkVersion${defaultTextStyle}"
     fi
-    
-    # Install .NET Core global tool to display connection info
-    dotnet tool install dotnetsay --global --version 2.1.7 --verbosity quiet
-
-    # Greetings!
-    if [ "$dotnetBotGreeting" ]; then
-        greeting="${newline}${defaultTextStyle}$dotnetBotGreeting${dotnetSayStyle}"
-    else
-        greeting="${newline}${defaultTextStyle}Hi there!${newline}"
-        greeting+="I'm going to provision some ${azCliCommandStyle}Azure${defaultTextStyle} resources${newline}"
-        greeting+="and get the code you'll need for this module.${dotnetSayStyle}"
-    fi
-
-    dotnetsay "$greeting"
-}
-
-summarize() {
-    summary="${newline}${successStyle}Your environment is ready!${defaultTextStyle}${newline}"
-    summary+="I set up some ${azCliCommandStyle}Azure${defaultTextStyle} resources and downloaded the code you'll need.${newline}"
-    summary+="You can resume this session and display this message again by re-running the script.${dotnetSayStyle}"
-    dotnetsay "$summary"
 }
 
 determineResourceGroup() {
