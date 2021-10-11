@@ -110,11 +110,9 @@ fi
 
 
 # AKS Cluster creation
-#clusterAksName="learn-helm-aks"
-
 echo
 echo "Creating AKS cluster \"$clusterAksName\" in resource group \"$clusterRg\" and location \"$clusterLocation\"..."
-aksCreateCommand="az aks create -n $clusterAksName -g $clusterRg --node-count $clusterNodeCount --node-vm-size Standard_D2_v3 --vm-set-type VirtualMachineScaleSets -l $clusterLocation --enable-managed-identity --generate-ssh-keys -o json"
+aksCreateCommand="az aks create -n $clusterAksName -g $clusterRg --node-count $clusterNodeCount --node-vm-size Standard_B2s --vm-set-type VirtualMachineScaleSets -l $clusterLocation --enable-managed-identity --generate-ssh-keys -o json"
 echo "${newline} > ${azCliCommandStyle}$aksCreateCommand${defaultTextStyle}${newline}"
 retry=5
 aks=`$aksCreateCommand`
@@ -138,12 +136,12 @@ fi
 echo
 echo "AKS cluster created."
 
-if [ ! -z "$learnAcrName" ]
-then
-    echo
-    echo "Granting AKS pull permissions from ACR $learnAcrName"
-    az aks update -n $clusterAksName -g $clusterRg --attach-acr $learnAcrName
-fi
+#CKITTEL-TEMP: if [ ! -z "$learnAcrName" ]
+#CKITTEL-TEMP: then
+#CKITTEL-TEMP:     echo
+#CKITTEL-TEMP:     echo "Granting AKS pull permissions from ACR $learnAcrName"
+#CKITTEL-TEMP:     az aks update -n $clusterAksName -g $clusterRg --attach-acr $learnAcrName
+#CKITTEL-TEMP: fi
 
 echo
 echo "Getting credentials for AKS..."
@@ -153,8 +151,8 @@ az aks get-credentials -n $clusterAksName -g $clusterRg --overwrite-existing
 
 echo
 echo "Installing NGINX ingress controller"
-kubectl apply -f ingress-controller/nginx-controller.yaml
-kubectl apply -f ingress-controller/nginx-loadbalancer.yaml
+#CKITTEL-TEMP: kubectl apply -f ingress-controller/nginx-controller.yaml
+#CKITTEL-TEMP: kubectl apply -f ingress-controller/nginx-loadbalancer.yaml
 
 echo
 echo "Getting load balancer public IP"
