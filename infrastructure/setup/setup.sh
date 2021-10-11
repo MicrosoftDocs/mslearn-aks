@@ -84,7 +84,7 @@ else
     cd $editorHomeLocation
 
     # Run mslearn-aks quickstart to deploy to AKS
-    $editorHomeLocation/infrastructure/deploy/k8s/quickstart.sh --subscription $clusterSubs --resource-group $resourceGroupName -n $moduleName --location westus
+    $editorHomeLocation/infrastructure/deploy/k8s/quickstart.sh --subscription $clusterSubs --resource-group $resourceGroupName -n $moduleName --location eastus2
 
     # Create ACR resource
     if [ -z "$useACR" ]; then

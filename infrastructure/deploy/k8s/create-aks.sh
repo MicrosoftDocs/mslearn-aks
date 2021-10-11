@@ -103,7 +103,7 @@ then
 else
     if [ -z "$clusterLocation" ]
     then
-        clusterLocation=`az group show -g $clusterRg --query "location" -otsv`
+        clusterLocation=`az group show -g $clusterRg --query "location" -o tsv`
     fi
 fi
 
@@ -112,7 +112,7 @@ fi
 # AKS Cluster creation
 echo
 echo "Creating AKS cluster \"$clusterAksName\" in resource group \"$clusterRg\" and location \"$clusterLocation\"..."
-aksCreateCommand="az aks create -n $clusterAksName -g $clusterRg --node-count $clusterNodeCount --node-vm-size Standard_B2 --vm-set-type VirtualMachineScaleSets -l $clusterLocation --enable-managed-identity --generate-ssh-keys -o json"
+aksCreateCommand="az aks create -n $clusterAksName -g $clusterRg --node-count $clusterNodeCount --node-vm-size Standard_B2s --vm-set-type VirtualMachineScaleSets -l $clusterLocation --enable-managed-identity --generate-ssh-keys -o json"
 echo "${newline} > ${azCliCommandStyle}$aksCreateCommand${defaultTextStyle}${newline}"
 retry=5
 aks=`$aksCreateCommand`
