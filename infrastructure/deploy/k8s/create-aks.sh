@@ -177,7 +177,7 @@ done
 
 while [ -z "$aksLbIp" ] || [ "$aksLbIp" == "<pending>" ]
 do
-    aksLbIp=`kubectl get svc/ingress-nginx -n ingress-nginx -o jsonpath='{.status.loadBalancer.ingress[0].ip}'`
+    aksLbIp=`kubectl get svc/nginx-ingress -n nginx-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}'`
     if [ -z "$aksLbIp" ]
     then
         echo "Waiting for the Load Balancer IP address - Ctrl+C to cancel..."
