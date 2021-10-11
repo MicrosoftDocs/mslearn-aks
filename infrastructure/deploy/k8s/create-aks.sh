@@ -136,12 +136,12 @@ fi
 echo
 echo "AKS cluster created."
 
-#CKITTEL-TEMP: if [ ! -z "$learnAcrName" ]
-#CKITTEL-TEMP: then
-#CKITTEL-TEMP:     echo
-#CKITTEL-TEMP:     echo "Granting AKS pull permissions from ACR $learnAcrName"
-#CKITTEL-TEMP:     az aks update -n $clusterAksName -g $clusterRg --attach-acr $learnAcrName
-#CKITTEL-TEMP: fi
+if [ ! -z "$learnAcrName" ]
+then
+    echo
+    echo "Granting AKS pull permissions from ACR $learnAcrName"
+    az aks update -n $clusterAksName -g $clusterRg --attach-acr $learnAcrName
+fi
 
 echo
 echo "Getting credentials for AKS..."
