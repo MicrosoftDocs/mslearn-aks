@@ -55,6 +55,7 @@ export CLUSTER_SUBS=$clusterSubs
 export CLUSTER_RG=$clusterRg
 export CLUSTER_LOCATION=$clusterLocation
 export LEARN_REGISTRY=$learnAcrName
+export LEARN_QUICKSTART=true
 
 cd ~/clouddrive/mslearn-aks/infrastructure/deploy/k8s
 
