@@ -151,13 +151,13 @@ az aks get-credentials -n $clusterAksName -g $clusterRg --overwrite-existing
 
 echo
 echo "Installing NGINX ingress controller"
-#CKITTEL-TEMP: kubectl apply -f ingress-controller/nginx-controller.yaml
-#CKITTEL-TEMP: kubectl apply -f ingress-controller/nginx-loadbalancer.yaml
+kubectl apply -f ingress-controller/nginx-controller.yaml
+ kubectl apply -f ingress-controller/nginx-loadbalancer.yaml
 
 echo
 echo "Getting load balancer public IP"
 
-aksNodeRGCommand="az aks list --query \"[?name=='$clusterAksName'&&resourceGroup=='$clusterRg'].nodeResourceGroup\" -otsv"
+aksNodeRGCommand="az aks list --query \"[?name=='$clusterAksName'&&resourceGroup=='$clusterRg'].nodeResourceGroup\" -o tsv"
 
 retry=5
 echo "${newline} > ${azCliCommandStyle}$aksNodeRGCommand${defaultTextStyle}${newline}"

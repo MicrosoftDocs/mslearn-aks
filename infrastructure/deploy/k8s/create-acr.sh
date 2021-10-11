@@ -94,7 +94,7 @@ then
 else
     if [ -z "$clusterLocation" ]
     then
-        clusterLocation=`az group show -g $clusterRg --query "location" -otsv`
+        clusterLocation=`az group show -g $clusterRg --query "location" -o tsv`
     fi
 fi
 
@@ -115,7 +115,7 @@ then
 
     echo
     echo "Creating Azure Container Registry aksacrlearn$acrIdTag in resource group $clusterRg..."
-    acrCommand="az acr create --name aksacrlearn$acrIdTag -g $clusterRg -l $clusterLocation -o json --sku basic --admin-enabled --query \"name\" -otsv"
+    acrCommand="az acr create --name aksacrlearn$acrIdTag -g $clusterRg -l $clusterLocation -o json --sku basic --admin-enabled --query \"name\" -o tsv"
     echo "${newline} > ${azCliCommandStyle}$acrCommand${defaultTextStyle}${newline}"
     learnAcrName=`$acrCommand`
 
@@ -129,7 +129,7 @@ then
     echo
 fi
 
-learnRegistry=`az acr show -n $learnAcrName --query "loginServer" -otsv`
+learnRegistry=`az acr show -n $learnAcrName --query "loginServer" -o tsv`
 
 if [ -z "$learnRegistry" ]
 then
@@ -137,7 +137,7 @@ then
     exit 1
 fi
 
-learnAcrCredentials=`az acr credential show -n $learnAcrName --query "[username,passwords[0].value]" -otsv`
+learnAcrCredentials=`az acr credential show -n $learnAcrName --query "[username,passwords[0].value]" -o tsv`
 learnAcrUser=`echo "$learnAcrCredentials" | head -1`
 learnAcrPassword=`echo "$learnAcrCredentials" | tail -1`
 

@@ -63,7 +63,7 @@ if [ -d "$rootLocation/mslearn-aks" ]; then
     echo " "
     echo "Before running this script, please remove or rename the existing $rootLocation/mslearn-aks/ directory as follows:"
     echo "Remove: rm -r $rootLocation/mslearn-aks/"
-    echo "Rename: mv $rootLocation/mslearn-aks/ ~/clouddrive/new-name-here/ "
+    echo "Rename: mv $rootLocation/mslearn-aks/ ~/clouddrive/new-name-here/"
     echo " "
     return 1
 else

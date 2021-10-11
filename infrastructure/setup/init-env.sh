@@ -12,7 +12,7 @@ if ! [ $rootLocation ]; then
     declare rootLocation=~
 fi
 
-declare subscriptionId=$(az account show --query id --output tsv)
+declare subscriptionId=$(az account show --query id -o tsv)
 declare resourceGroupName=""
 
 # Functions
