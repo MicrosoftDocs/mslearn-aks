@@ -1,15 +1,11 @@
 # This script expects the following environment variables:
 # moduleName
 # eg. declare moduleName="learn-aks-deploy-helm"
-#
-# scriptPath
-# projectRootDirectory
 
 # Common Declarations
 declare gitUser="MicrosoftDocs"
 declare scriptPath=https://raw.githubusercontent.com/$gitUser/mslearn-aks/$gitBranch/infrastructure/scripts
 declare dotnetScriptsPath=$scriptPath/dotnet
-declare instanceId=$(($RANDOM * $RANDOM))
 declare gitDirectoriesToClone="infrastructure/deploy/ modules/$moduleName/src/"
 declare gitPathToCloneScript=https://raw.githubusercontent.com/$gitUser/mslearn-aks/$gitBranch/infrastructure/setup/sparsecheckout.sh
 
@@ -17,33 +13,10 @@ if ! [ $rootLocation ]; then
     declare rootLocation=~
 fi
 
-#declare srcWorkingDirectory=$rootLocation/mslearn-aks/src
-#declare setupWorkingDirectory=$rootLocation/mslearn-aks/setup
 declare subscriptionId=$(az account show --query id --output tsv)
 declare resourceGroupName=""
-declare defaultLocation="centralus"
 
 # Functions
-setAzureCliDefaults() {
-    echo "${headingStyle}Setting default Azure CLI values...${azCliCommandStyle}"
-    (
-        set -x
-        az configure --defaults \
-            group=$resourceGroupName \
-            location=$defaultLocation
-    )
-}
-
-resetAzureCliDefaults() {
-    echo "${headingStyle}Resetting default Azure CLI values...${azCliCommandStyle}"
-    (
-        set -x
-        az configure --defaults \
-            group= \
-            location=
-    )
-}
-
 configureDotNetCli() {
     echo "${newline}${headingStyle}Configuring the .NET Core CLI...${defaultTextStyle}"
     declare installedDotNet=$(dotnet --version)
@@ -113,20 +86,6 @@ downloadAndBuild() {
         wget -q -O - $gitPathToCloneScript | bash -s $gitDirectoriesToClone
     )
     echo "${defaultTextStyle}"
-}
-
-# Provision Azure Resource Group
-# Should only ever run if we're running in the Cloud Shell without the Learn environment
-provisionResourceGroup() {
-    if [ "$resourceGroupName" = "$moduleName" ]; then
-        (
-            echo "${newline}${headingStyle}Provisioning Azure Resource Group...${azCliCommandStyle}"
-            set -x
-            az group create \
-                --name $resourceGroupName \
-                --output none
-        )
-    fi
 }
 
 addVariablesToStartup() {

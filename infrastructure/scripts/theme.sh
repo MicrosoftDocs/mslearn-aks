@@ -14,9 +14,6 @@ declare newline=$'\n'
 # Element styling
 declare azCliCommandStyle="${plain}${cyan}"
 declare defaultTextStyle="${plain}${white}"
-declare dotnetCliCommandStyle="${plain}${magenta}"
-declare genericCommandStyle="${plain}${yellow}"
-declare dotnetSayStyle="${magenta}${bold}"
 declare headingStyle="${white}${bold}"
 declare successStyle="${green}${bold}"
 declare warningStyle="${yellow}${bold}"
