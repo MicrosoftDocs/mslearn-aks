@@ -35,7 +35,7 @@ if [ -z "$clusterSubs" ]; then
 fi
 
 if [ -z "$moduleName" ]; then
-     echo "${newline}${errorStyle}ERROR: Cluster name is mandatory. Use -n to set it.$clusterSubs.${defaultTextStyle}${newline}"
+     echo "${newline}${errorStyle}ERROR: Cluster name is mandatory. Use -n to set it.${defaultTextStyle}${newline}"
      return 1
 fi
 
@@ -51,7 +51,7 @@ if [ -z "$moduleName" ]; then
 fi
 
 # Any other declarations we need
-declare gitUser="cryophobia"
+declare -x gitUser="MicrosoftDocs"
 declare -x gitBranch="main"
 declare initScript=https://raw.githubusercontent.com/$gitUser/mslearn-aks/$gitBranch/infrastructure/setup/init-env.sh
 declare suppressAzureResources=false
@@ -63,7 +63,7 @@ if [ -d "$rootLocation/mslearn-aks" ]; then
     echo " "
     echo "Before running this script, please remove or rename the existing $rootLocation/mslearn-aks/ directory as follows:"
     echo "Remove: rm -r $rootLocation/mslearn-aks/"
-    echo "Rename: mv $rootLocation/mslearn-aks/ ~/clouddrive/new-name-here/ "
+    echo "Rename: mv $rootLocation/mslearn-aks/ ~/clouddrive/new-name-here/"
     echo " "
     return 1
 else
@@ -74,7 +74,7 @@ else
         declare installDotNet="false"
     fi
 
-    # Grab and run initenvironment.sh
+    # Grab and run init-env.sh
     . <(wget -q -O - $initScript)
 
     # Download and build
@@ -90,8 +90,6 @@ else
     if [ -z "$useACR" ]; then
         declare useACR="false"
     fi
-
-    echo "useACR $useACR"
 
     if  ! [ -z "$useACR" ] && [ $useACR == true ]; then
         $editorHomeLocation/infrastructure/deploy/k8s/create-acr.sh --subscription $clusterSubs --resource-group $resourceGroupName --aks-name $moduleName --acr-name mslearn-aks-acr --location westus

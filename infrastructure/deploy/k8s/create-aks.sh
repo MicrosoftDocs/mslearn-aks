@@ -103,18 +103,16 @@ then
 else
     if [ -z "$clusterLocation" ]
     then
-        clusterLocation=`az group show -g $clusterRg --query "location" -otsv`
+        clusterLocation=`az group show -g $clusterRg --query "location" -o tsv`
     fi
 fi
 
 
 
 # AKS Cluster creation
-#clusterAksName="learn-helm-aks"
-
 echo
 echo "Creating AKS cluster \"$clusterAksName\" in resource group \"$clusterRg\" and location \"$clusterLocation\"..."
-aksCreateCommand="az aks create -n $clusterAksName -g $clusterRg --node-count $clusterNodeCount --node-vm-size Standard_D2_v3 --vm-set-type VirtualMachineScaleSets -l $clusterLocation --enable-managed-identity --generate-ssh-keys -o json"
+aksCreateCommand="az aks create -n $clusterAksName -g $clusterRg --node-count $clusterNodeCount --node-vm-size Standard_B2s --vm-set-type VirtualMachineScaleSets -l $clusterLocation --enable-managed-identity --generate-ssh-keys -o json"
 echo "${newline} > ${azCliCommandStyle}$aksCreateCommand${defaultTextStyle}${newline}"
 retry=5
 aks=`$aksCreateCommand`
@@ -154,12 +152,12 @@ az aks get-credentials -n $clusterAksName -g $clusterRg --overwrite-existing
 echo
 echo "Installing NGINX ingress controller"
 kubectl apply -f ingress-controller/nginx-controller.yaml
-kubectl apply -f ingress-controller/nginx-loadbalancer.yaml
+ kubectl apply -f ingress-controller/nginx-loadbalancer.yaml
 
 echo
 echo "Getting load balancer public IP"
 
-aksNodeRGCommand="az aks list --query \"[?name=='$clusterAksName'&&resourceGroup=='$clusterRg'].nodeResourceGroup\" -otsv"
+aksNodeRGCommand="az aks list --query \"[?name=='$clusterAksName'&&resourceGroup=='$clusterRg'].nodeResourceGroup\" -o tsv"
 
 retry=5
 echo "${newline} > ${azCliCommandStyle}$aksNodeRGCommand${defaultTextStyle}${newline}"
@@ -179,7 +177,7 @@ done
 
 while [ -z "$aksLbIp" ] || [ "$aksLbIp" == "<pending>" ]
 do
-    aksLbIp=`kubectl get svc/ingress-nginx -n ingress-nginx -o jsonpath='{.status.loadBalancer.ingress[0].ip}'`
+    aksLbIp=`kubectl get svc/nginx-ingress -n nginx-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}'`
     if [ -z "$aksLbIp" ]
     then
         echo "Waiting for the Load Balancer IP address - Ctrl+C to cancel..."
