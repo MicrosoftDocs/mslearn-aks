@@ -20,6 +20,9 @@ while [ "$1" != "" ]; do
         -i | --install-dot-net)         shift
                                         installDotNet=$1
                                         ;;
+        -l | --location)                shift
+                                        clusterLocation=$1
+                                        ;;
              * )                        echo "Invalid param: $1"
                                         exit 1
     esac
@@ -48,6 +51,11 @@ declare -x dotnetSdkVersion="3.1.302"
 # Module name
 if [ -z "$moduleName" ]; then
     declare moduleName="mslearn-aks"
+fi
+
+# default deployment location
+if [ -z "$clusterLocation" ]; then
+    declare clusterLocation="westus"
 fi
 
 # Any other declarations we need
@@ -84,7 +92,7 @@ else
     cd $editorHomeLocation
 
     # Run mslearn-aks quickstart to deploy to AKS
-    $editorHomeLocation/infrastructure/deploy/k8s/quickstart.sh --subscription $clusterSubs --resource-group $resourceGroupName -n $moduleName --location westus
+    $editorHomeLocation/infrastructure/deploy/k8s/quickstart.sh --subscription $clusterSubs --resource-group $resourceGroupName -n $moduleName --location $clusterLocation
 
     # Create ACR resource
     if [ -z "$useACR" ]; then
@@ -92,7 +100,7 @@ else
     fi
 
     if  ! [ -z "$useACR" ] && [ $useACR == true ]; then
-        $editorHomeLocation/infrastructure/deploy/k8s/create-acr.sh --subscription $clusterSubs --resource-group $resourceGroupName --aks-name $moduleName --acr-name mslearn-aks-acr --location westus
+        $editorHomeLocation/infrastructure/deploy/k8s/create-acr.sh --subscription $clusterSubs --resource-group $resourceGroupName --aks-name $moduleName --acr-name mslearn-aks-acr --location $clusterLocation
     fi
 
     # Display information to use
